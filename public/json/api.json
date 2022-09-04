@@ -1,0 +1,246 @@
+{
+  "test": {
+      "url": "/v3/test",
+      "method": "get",
+      "response": {
+          "ok": {
+              "statusCode": 200,
+              "json": {}
+          }
+      }
+  },
+  "signup": {
+      "url": "/v3/user/reg",
+      "method": "post",
+      "description": "email을 고유 아이디로 새로운 사용자 계정을 생성합니다.",
+      "body": {
+          "email": {
+              "type": "email",
+              "required": true,
+              "description": "이메일 주소"
+          },
+          "key": {
+              "type": "string",
+              "required": true,
+              "description": "패스워드"
+          },
+          "name": {
+              "type": "string",
+              "description": "사용자의 이름"
+          }
+      },
+      "response": {
+          "success": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok",
+                  "data": {
+                      "token": "TODO: 사용자의 유니크한 id를 JWT token으로 만들어서 내려줍니다."
+                  }
+              }
+          },
+          "duplicated": {
+              "statusCode": 200,
+              "json": {
+                  "status": "user_duplicate"
+              }
+          },
+          "fail": {
+              "statusCode": 200,
+              "json": {
+                  "status": "nok"
+              }
+          }
+      }
+  },
+  "withdrawal": {
+      "url": "/v3/user/unreg",
+      "method": "post",
+      "description": "전달받은 token으로 사용자 계정을 조회하고 삭제합니다.",
+      "headers": {
+          "Authorization": {
+              "type": "string",
+              "required": true,
+              "description": "'Bearer {{ token }}'을 전달해주세요."
+          }
+      },
+      "response": {
+          "ok": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok"
+              }
+          }
+      }
+  },
+  "signin": {
+      "url": "/v3/auth/login",
+      "method": "post",
+      "description": "",
+      "body": {
+          "email": {
+              "type": "email",
+              "required": true,
+              "description": "이메일 주소"
+          },
+          "key": {
+              "type": "string",
+              "required": true,
+              "description": "패스워드"
+          }
+      },
+      "response": {
+          "success": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok",
+                  "token": "TODO: 사용자의 유니크한 id를 JWT token으로 만들어서 내려줘야 합니다."
+              }
+          },
+          "nouser": {
+              "statusCode": 200,
+              "json": {
+                  "status": "no_user"
+              }
+          },
+          "fail": {
+              "statusCode": 200,
+              "json": {
+                  "status": "nok"
+              }
+          }
+      }
+  },
+  "doctorList": {
+      "url": "/v3/doctor/list",
+      "method": "get",
+      "description": "로그인한 사용자에게만 의사 목록을 내려줍니다.",
+      "headers": {
+          "Authorization": {
+              "type": "string",
+              "required": true,
+              "description": "'Bearer {{ token }}'을 전달해주세요."
+          }
+      },
+      "response": {
+          "success": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok",
+                  "data": {
+                      "doctors": {
+                          "type": "array",
+                          "items": {
+                              "id": "string",
+                              "doctor_display_name": "string",
+                              "doctor_image_url": {
+                                  "type": "string",
+                                  "description": "이미지 주소"
+                              },
+                              "hospital_name": "string",
+                              "hospital_address": "string",
+                              "description": "string",
+                              "hospital_img": {
+                                  "type": "string",
+                                  "description": "이미지 주소"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  },
+  "doctor": {
+      "url": "/v3/doctor",
+      "method": "get",
+      "description": "로그인한 사용자에게만 의사의 상세 정보를 내려줍니다.",
+      "headers": {
+          "Authorization": {
+              "type": "string",
+              "required": true,
+              "description": "'Bearer {{ token }}'을 전달해주세요."
+          }
+      },
+      "response": {
+          "success": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok",
+                  "type": "array",
+                  "doctor": {
+                      "type": "object",
+                      "property": {
+                          "available_hours": "string",
+                          "available_weekday": "string",
+                          "description": "string",
+                          "doctor_display_name": "",
+                          "doctor_image_url": {
+                              "type": "string",
+                              "description": "이미지 주소"
+                          },
+                          "doctor_images": {
+                              "type": "array",
+                              "items": {
+                                  "url": "string"
+                              }
+                          },
+                          "doctor_tel": "string",
+                          "doctor_tel_kakao": "string",
+                          "hospital_addr": "string",
+                          "hospital_name": "string",
+                          "lab_addr": "string",
+                          "lab_name": "string",
+                          "lab_postal_code": "string",
+                          "lab_receiver_name": "string",
+                          "lab_tel": "string",
+                          "lat": "string",
+                          "lng": "string",
+                          "open_hours": {
+                              "type": "array",
+                              "items": {}
+                          },
+                          "professional_statement": "string",
+                          "subjects": "string"
+                      }
+                  }
+              }
+          }
+      }
+  },
+  "register": {
+      "url": "/v3/std/reg",
+      "method": "post",
+      "description": "검사 신청",
+      "headers": {
+          "Authorization": {
+              "type": "string",
+              "required": true,
+              "description": "'Bearer {{ token }}'을 전달해주세요."
+          }
+      },
+      "body": {
+          "doctor_id": "string",
+          "address": "string",
+          "address_code": "string",
+          "store_address": "string"
+      },
+      "response": {
+          "success": {
+              "statusCode": 200,
+              "json": {
+                  "status": "ok"
+              }
+          },
+          "fail": {
+              "statusCode": 200,
+              "json": {
+                  "stats": "nok",
+                  "data": {
+                      "message": "string"
+                  }
+              }
+          }
+      }
+  }
+}

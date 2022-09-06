@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ApiSpec } from '../routes/types';
+import { ApiSpec } from '../framework/modules/router/types';
 
 interface ControllerParams {
   req: express.Request;

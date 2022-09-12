@@ -3,12 +3,12 @@ import createError, { HttpError } from 'http-errors';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import logger from 'morgan';
-import { AppProps } from './types';
+import { ExpressAppProps } from './types';
 
-interface ExpressAppProps extends AppProps {}
+import { RouterModule } from '../modules';
 
-function expressApp(options: ExpressAppProps) {
-  const { modules } = options;
+function expressApp(props: ExpressAppProps) {
+  const { modules } = props;
 
   const app = express();
   
@@ -18,8 +18,17 @@ function expressApp(options: ExpressAppProps) {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
 
-  for (const module of modules) {
-    app.use(module);
+  if (modules) {
+    const { router } = modules;
+
+    // use router module
+    if (router) {
+      const _router = router as RouterModule;
+      app.use((request: express.Request, response: express.Response) => {
+        _router?.route(request.url, request, response);
+        response.end();
+      });
+    }
   }
   
   // catch 404 and forward to error handler

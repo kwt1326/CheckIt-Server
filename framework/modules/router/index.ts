@@ -1,22 +1,27 @@
-import path from 'path';
 import * as express from "express"
-import { ApiSpec, RouterParams } from "./types";
+import { RouterApiSpec, RouterHandlerParams, RouterProps } from "./types";
 
-/**
- * @description json schema router module - API 스펙을 파싱하여 경로를 라우팅합니다.
- * @param req 
- * @param res 
- * @returns 
- */
-const router = ({
-  schema,
-  handler
-}: RouterParams) => (request: express.Request, response: express.Response) => {
-  const spec = Object.entries(schema).find(([, _spec]: [string, ApiSpec]) => _spec.url === request.url);
+class RouterModule {
+  private schema: { [x: string]: RouterApiSpec } = {};
+  private handler = (params: RouterHandlerParams) => {};
 
-  if (!spec) return response.end();
+  constructor({ path, handler }: RouterProps) {
+    const apiSchemaJson = require(path);
+    const apiSchema = Object.freeze(apiSchemaJson);
 
-  return handler({ request, response, key: spec[0], spec: spec[1] });
+    this.schema = apiSchema;
+    this.handler = handler;
+  }
+
+  /**
+   * @description json schema router module - API 스펙을 파싱하여 경로를 라우팅합니다.
+   */
+  route(url: string, request: express.Request, response: express.Response) {
+    const spec = Object.entries(this.schema).find(([, _spec]: [string, RouterApiSpec]) => _spec.url === url);
+    if (spec) {
+      this.handler({ request, response, key: spec[0], spec: spec[1] });
+    }
+  }
 }
 
-export default router;
+export { RouterModule };

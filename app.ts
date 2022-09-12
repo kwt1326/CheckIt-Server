@@ -2,13 +2,10 @@ import path from 'path';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-import serverRun from './framework/server';
-import routerModule from './framework/modules/router';
-import { RouterHandlerParams } from './framework/modules/router/types';
+import Framework from './framework';
+import { RouterModule, RouterHandlerParams, LoggerModule } from './framework/modules';
 import { createModel } from './models';
-
-const apiSchemaJson = require(path.join(__dirname, 'public/json/api.json'));
-const apiSchema = Object.freeze(apiSchemaJson);
+import Doctor from './controller/doctor.controller';
 
 dotenv.config();
 const { MONGO_DB_URI, NODE_ENV } = process.env;
@@ -16,7 +13,7 @@ const mongoUrl = NODE_ENV === 'development' ? 'mongodb://localhost:27017/checkit
 
 const routerModuleHandler = (params: RouterHandlerParams) => {
   const { request, response, key, spec } = params;
-  
+  const controllers = [new Doctor()];
 }
 
 createModel();
@@ -26,4 +23,16 @@ mongoose
   .then(() => console.log('successfully connect mongo db'))
   .catch((e: any) => { console.error(e); console.log('failed db connection') });
 
-serverRun('express', { modules: [routerModule({ schema: apiSchema, handler: routerModuleHandler })] });
+const framework = new Framework({
+  serverProps: {
+    type: 'express',
+    appProps: {
+      modules: {
+        router: new RouterModule({ path: path.join(__dirname, 'public/json/api.json'), handler: routerModuleHandler }),
+        logger: new LoggerModule({ options: {} }),
+      }
+    },
+  }
+});
+
+framework.listen(3000);

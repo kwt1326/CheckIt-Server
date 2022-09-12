@@ -1,3 +1,10 @@
-import * as router from './router';
+import { LoggerModule } from './logger';
+import { RouterModule } from './router';
 
-export default { router }
+import {} from './logger/types';
+import { RouterApiSpec, RouterHandlerParams, RouterProps } from './router/types';
+
+export type {
+  RouterApiSpec, RouterHandlerParams, RouterProps
+}
+export { LoggerModule, RouterModule }

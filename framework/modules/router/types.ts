@@ -1,6 +1,5 @@
 import * as express from 'express';
-
-type Method = 'get' | 'post';
+import { ModuleDefaultProps } from '../types';
 
 type ResponseData = {
   [x: string]: {
@@ -9,15 +8,15 @@ type ResponseData = {
   }
 }
 
-interface RouterHandlerParams { request: express.Request; response: express.Response; key: string; spec: ApiSpec }
+interface RouterHandlerParams { request: express.Request; response: express.Response; key: string; spec: RouterApiSpec }
 
-interface RouterParams {
-  schema: { [key: string]: ApiSpec }
+interface RouterProps extends ModuleDefaultProps {
+  path: string;
   handler: (params: RouterHandlerParams) => void;
 }
 
-interface ApiSpec {
-  method: Method;
+interface RouterApiSpec {
+  method: 'get' | 'post';
   url: string;
   response: Partial<ResponseData>;
   body?: any;
@@ -25,4 +24,4 @@ interface ApiSpec {
   headers?: { Authorization: string };
 }
 
-export type { Method, ApiSpec, RouterHandlerParams, RouterParams }
+export type { RouterApiSpec, RouterHandlerParams, RouterProps }

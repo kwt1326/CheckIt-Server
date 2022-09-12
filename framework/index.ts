@@ -1,36 +1,47 @@
 import 'reflect-metadata';
-import Server, * as server from './server';
+import * as express from 'express';
+import Server from './server';
 import { ServerProps } from './server';
 import { AppProps, Modules } from './server/types';
+import expressApp from './server/express';
 
 interface FrameworkProps {
   serverProps: ServerProps;
+  appProps: AppProps;
 }
 
 type Instance = {
-  server: any;
   modules: Modules;
+  app: express.Express;
 }
 
 class Framework {
-  static instance: Instance | null = null;
-  static server: Server | undefined;
+  static instance: Instance;
+  private readonly _app: express.Express;
+  private readonly _server: Server;
+  private readonly _modules: Modules;
 
   constructor(params: FrameworkProps) {
+    this._app = expressApp.instance;
+    this._server = new Server({ type: 'express' });
+    this._modules = params.appProps.modules;
+
+    Object.values(this._modules).forEach((module) => module.init(this._app));
+
     if (!Framework.instance) {
-      Framework.instance = this.init(params);
-      Framework.server = Framework.instance.server;
+      Framework.instance = this.init();
     }
   }
 
-  init(params: FrameworkProps) {
-    const server = new Server(params.serverProps);
-    const modules = server.modules;
-    return { server, modules };
+  init() {
+    return {
+      modules: this._modules,
+      app: this._app,
+    }
   }
 
-  listen(port?: number) {
-    Framework.server?.server.listen(port || 3000);
+  run() {
+    this._server.init(this._app);
   }
 }
 

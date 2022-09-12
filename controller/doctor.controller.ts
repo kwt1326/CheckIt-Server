@@ -1,15 +1,30 @@
-import { Controller, UseLogger, Log } from "../framework/decorators";
+import * as express from 'express';
+import { UseLogger, Log } from "../framework/decorators";
+import { RouterApiSpec } from '../framework/modules';
+import { ResponseData } from '../framework/modules/router/types';
+import { DoctorModel } from '../models';
 
 @UseLogger
-@Controller('/v3/doctor')
 class Doctor {
-  constructor() {}
+  constructor() { }
 
   @Log
-  getDoctors() {
-    
+  private doctorList(api: RouterApiSpec) {
+    return (req: express.Request, res: express.Response) => {
+      const responseType: ResponseData = api.response;
+      const jsonResult = responseType.success.json;
+
+      jsonResult.data.doctors = DoctorModel.find();
+
+      res.status(responseType.success.statusCode).json(jsonResult);
+    }
+  }
+
+  get default() {
+    return {
+      doctorList: this.doctorList,
+    }
   }
 }
 
 export default Doctor;
-console.log(Doctor);

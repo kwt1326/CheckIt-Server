@@ -12,16 +12,22 @@ interface RouterHandlerParams { request: express.Request; response: express.Resp
 
 interface RouterProps extends ModuleDefaultProps {
   path: string;
-  handler: (params: RouterHandlerParams) => void;
+  routeFunctions: { [x: string]: any };
 }
 
 interface RouterApiSpec {
   method: 'get' | 'post';
   url: string;
-  response: Partial<ResponseData>;
+  response: ResponseData;
   body?: any;
   description?: string;
-  headers?: { Authorization: string };
+  headers?: {
+    Authorization: {
+      type: string;
+      required: boolean;
+      description: string;
+    }
+  };
 }
 
-export type { RouterApiSpec, RouterHandlerParams, RouterProps }
+export type { RouterApiSpec, RouterHandlerParams, RouterProps, ResponseData }

@@ -9,10 +9,11 @@ const doctorSchema = new mongoose.Schema({
   description: { type: String, default: '' },
   doctor_display_name: { type: String, default: '' },
   doctor_image_url: { type: String, default: '', },
-  doctor_images: { type: Array, default: [] },
+  doctor_images: [{ type: String, default: '' }],
   doctor_tel: { type: String, default: '', },
   hospital_addr: { type: String, required: true, },
   hospital_name: { type: String, required: true, },
+  hospital_img: { type: String, required: true, },
   lab_addr: { type: String, default: '', },
   lab_name: { type: String, default: '', },
   lab_postal_code: { type: String, default: '', },
@@ -27,7 +28,7 @@ const doctorSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-export default doctorSchema;
+export default mongoose.model('Doctor', doctorSchema);
 
 // const doctor = {
 //   "doctor_id": "test",

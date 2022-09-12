@@ -1,12 +1,16 @@
+import * as express from 'express';
+import { ModuleDefaultClass } from "../common";
 import { LoggerProps, LogLevel, LogOption } from "./types"
 
-class LoggerModule {
+class LoggerModule implements ModuleDefaultClass {
   protected options: LogOption;
   protected styles: any;
 
   constructor(props: LoggerProps) {
     this.options = props.options;
   }
+
+  init(app: express.Express) {}
 
   setStyle(styles: any) {
     this.styles = styles.join(';') + ';';

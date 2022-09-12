@@ -1,49 +1,33 @@
 #!/usr/bin/env node
 
 import http from 'http';
-import expressApp from './express';
-import { AppProps, Modules, ServerProps, ServerType } from './types';
-
+import * as express from 'express';
+import { ServerProps, ServerType } from './types';
 
 class Server {
-  private _app: any = null;
   private _server: any = null;
-  private _modules: Modules = undefined;
   private _type: ServerType = 'express';
 
-  constructor({ type, appProps }: ServerProps) {
+  constructor({ type }: ServerProps) {
     this._type = type;
-    this._server = this.init(appProps);
-    this._modules = appProps.modules;
   }
 
   get server() {
     return this._server;
   }
 
-  get app() {
-    return this._app;
-  }
-
-  get modules() {
-    return this._modules;
-  }
-
-  init(appProps: AppProps) {
+  init(app: express.Express) {
     /**
      * Get port from environment and store in Express.
      */
-    
-    this._app = this._type === 'express' ? expressApp(appProps) : {};
-
     const port = normalizePort(process.env.PORT || '3000');
-    this._app.set('port', port);
+    app.set('port', port);
     
     /**
      * Create HTTP server.
      */
     
-    const server = http.createServer(this._app);
+    const server = http.createServer(app);
     
     /**
      * Listen on provided port, on all network interfaces.
@@ -114,6 +98,7 @@ class Server {
       }
     }
   
+    server.listen(port || 3000);
     return server;
   }
 }

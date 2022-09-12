@@ -1,22 +1,23 @@
-import { ModuleDefaultProps } from "../modules/types";
+import * as express from 'express';
+import { ModuleDefaultClass } from "../modules/common";
 
 interface AppProps {
-  modules?: Partial<{
-    router: ModuleDefaultProps;
-    logger: ModuleDefaultProps;
-  }>;
+  modules: Modules;
 }
 
 interface ServerProps {
+  port?: number;
   type: ServerType;
-  appProps: AppProps;
 }
 
 interface ExpressAppProps extends AppProps {}
 
 type ServerType = 'express' | 'koa';
 
-type Modules = AppProps['modules'];
+type Modules = {
+  router: ModuleDefaultClass;
+  logger: ModuleDefaultClass;
+};
 
 export type {
   AppProps,

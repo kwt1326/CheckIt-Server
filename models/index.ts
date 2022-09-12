@@ -1,12 +1,6 @@
-import mongoose from 'mongoose';
-import authSchema from './schema/auth';
-import doctorSchema from './schema/doctor';
-import imageSchema from './schema/image';
+import AuthModel from './schema/auth.schema';
+import DoctorModel from './schema/doctor.schema';
+import ImagesModel from './schema/image.schema';
 
-function createModel() {
-  mongoose.model('Auth', authSchema);
-  mongoose.model('Doctor', doctorSchema);
-  mongoose.model('Images', imageSchema);
-}
-
-export { createModel }
+export { AuthModel, DoctorModel, ImagesModel }
+export default { AuthModel, DoctorModel, ImagesModel }

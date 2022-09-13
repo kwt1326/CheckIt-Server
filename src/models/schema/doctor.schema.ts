@@ -41,6 +41,7 @@ export default mongoose.model('Doctor', doctorSchema);
 //   "doctor_tel": "01023456789",
 //   "hospital_addr": "서울특별시 성동구 왕십리로 83-21 에스엠엔터테인먼트",
 //   "hospital_name": "SM 엔터테인먼트",
+//   "hospital_img": "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210809_254%2F1628490646641wLE0B_JPEG%2FOYFVJ_qgIB14KM3Zz8AIhJxF.jpg",
 //   "lab_addr": "서울특별시 성동구 왕십리로 83-21 에스엠엔터테인먼트",
 //   "lab_name": "SM 엔터테인먼트",
 //   "lab_postal_code": "123456",

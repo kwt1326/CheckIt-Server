@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import * as express from 'express';
+
 import Server from './server';
+import expressApp from './server/express';
 import { ServerProps } from './server';
 import { AppProps, Modules } from './server/types';
-import expressApp from './server/express';
 
 interface FrameworkProps {
   serverProps: ServerProps;
@@ -16,7 +17,7 @@ type Instance = {
 }
 
 class Framework {
-  static instance: Instance;
+  private static _instance: Instance;
   private readonly _app: express.Express;
   private readonly _server: Server;
   private readonly _modules: Modules;
@@ -28,9 +29,13 @@ class Framework {
 
     Object.values(this._modules).forEach((module) => module.init(this._app));
 
-    if (!Framework.instance) {
-      Framework.instance = this.init();
+    if (!Framework._instance) {
+      Framework._instance = this.init();
     }
+  }
+
+  static get instance() {
+    return Framework._instance;
   }
 
   init() {

@@ -2,12 +2,13 @@ import path from 'path';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-import Framework from './framework';
-import { RouterModule, LoggerModule } from './framework/modules';
+import Framework from '../framework';
+import { RouterModule, LoggerModule } from '../framework/modules';
 
-import Doctor from './controller/doctor.controller';
-import Test from './controller/test.controller';
-import makeDoctorData from './inputModel';
+import DoctorController from './controller/doctor.controller';
+import TestController from './controller/test.controller';
+
+import { makeDoctorData } from './util/inputData';
 
 dotenv.config();
 const { MONGO_DB_URI, NODE_ENV } = process.env;
@@ -18,7 +19,7 @@ mongoose
   .then(() => console.log('successfully connect mongo db'))
   .catch((e: any) => { console.error(e); console.log('failed db connection') });
 
-makeDoctorData();
+// makeDoctorData();
 
 const framework = new Framework({
   serverProps: {
@@ -28,8 +29,8 @@ const framework = new Framework({
   appProps: {
     modules: {
       router: new RouterModule({ path: path.join(__dirname, 'public/json/api.json'), routeFunctions: {
-        ...(new Doctor().default),
-        ...(new Test().default)
+        ...(new DoctorController().default),
+        ...(new TestController().default)
       } }),
       logger: new LoggerModule({ options: {} }),
     }

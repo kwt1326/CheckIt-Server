@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { ModuleDefaultClass } from "../modules/common";
 
 interface AppProps {

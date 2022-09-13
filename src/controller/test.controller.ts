@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { RouterApiSpec } from '../framework/modules';
 
-class Test {
+class TestController {
   constructor() {}
 
   private test(api: RouterApiSpec) {
@@ -18,4 +18,4 @@ class Test {
   }
 }
 
-export default Test;
+export default TestController;

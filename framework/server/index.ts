@@ -2,15 +2,12 @@
 
 import http from 'http';
 import * as express from 'express';
-import { ServerProps, ServerType } from './types';
+import { ServerProps } from './types';
 
 class Server {
   private _server: any = null;
-  private _type: ServerType = 'express';
 
-  constructor({ type }: ServerProps) {
-    this._type = type;
-  }
+  constructor({}: ServerProps) {}
 
   get server() {
     return this._server;

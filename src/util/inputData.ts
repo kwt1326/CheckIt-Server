@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-import { DoctorModel, ImagesModel } from "./models";
+import { DoctorModel, ImagesModel } from "../models";
 
-export default async function makeDoctorData() {
-  return;
+/**
+ * @description 몽고 DB 에 테스트 데이터를 넣기 위한 함수 입니다. 관계를 고려한 데이터 인풋 입니다.
+ */
+export async function makeDoctorData() {
   for (let i = 0; i < 51; ++i) {
     const doctor = new DoctorModel({
       _id: new mongoose.Types.ObjectId(),
@@ -29,7 +31,7 @@ export default async function makeDoctorData() {
     });
     const image = new ImagesModel({
       type: 1,
-      url: ,
+      url: 'https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg',
       doctorId: doctor._id,
     });
   }

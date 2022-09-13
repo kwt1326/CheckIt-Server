@@ -6,6 +6,7 @@ const useProtector = (token: string, api: RouterApiSpec): MethodDecorator =>
     try {
       const authorization = api.headers?.Authorization;
       if (api.headers?.Authorization.required) {
+        // TODO: validate token
         if (!token) {
           throw new Error(authorization?.description);
         }

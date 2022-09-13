@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { RouterApiSpec } from '../framework/modules';
+import { ControllerDefaultClass, RouterApiSpec } from '../../framework/modules';
 
-class TestController {
+class TestController implements ControllerDefaultClass {
   constructor() {}
 
   private test(api: RouterApiSpec) {

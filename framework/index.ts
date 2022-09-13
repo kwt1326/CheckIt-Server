@@ -23,15 +23,15 @@ class Framework {
   private readonly _modules: Modules;
 
   constructor(params: FrameworkProps) {
-    this._app = expressApp.instance;
-    this._server = new Server({ type: 'express' });
-    this._modules = params.appProps.modules;
-
-    Object.values(this._modules).forEach((module) => module.init(this._app));
-
     if (!Framework._instance) {
       Framework._instance = this.init();
     }
+    
+    this._app = expressApp.instance;
+    this._server = new Server({});
+    this._modules = params.appProps.modules;
+
+    Object.values(this._modules).forEach((module) => module.init(this._app));
   }
 
   static get instance() {

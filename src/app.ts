@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import Framework from '../framework';
-import { RouterModule, LoggerModule } from '../framework/modules';
+import { RouterModule, LoggerModule, ErrorBoundaryModule } from '../framework/modules';
 
 import DoctorController from './controller/doctor.controller';
 import TestController from './controller/test.controller';
@@ -24,7 +24,6 @@ mongoose
 const framework = new Framework({
   serverProps: {
     port: 3000,
-    type: 'express',
   },
   appProps: {
     modules: {
@@ -33,6 +32,7 @@ const framework = new Framework({
         ...(new TestController().default)
       } }),
       logger: new LoggerModule({ options: {} }),
+      errorBoundary: new ErrorBoundaryModule(),
     }
   }
 });

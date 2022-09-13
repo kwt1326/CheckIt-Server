@@ -6,7 +6,6 @@ interface AppProps {
 
 interface ServerProps {
   port?: number;
-  type: ServerType;
 }
 
 interface ExpressAppProps extends AppProps {}
@@ -16,6 +15,7 @@ type ServerType = 'express' | 'koa';
 type Modules = {
   router: ModuleDefaultClass;
   logger: ModuleDefaultClass;
+  errorBoundary: ModuleDefaultClass;
 };
 
 export type {

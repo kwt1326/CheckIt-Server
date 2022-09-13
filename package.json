@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "npx tsc",
-    "start": "ts-node app.ts",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q app.ts\""
+    "start": "ts-node src/app.ts",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q src/app.ts\""
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

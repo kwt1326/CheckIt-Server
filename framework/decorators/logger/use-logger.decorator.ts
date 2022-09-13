@@ -4,7 +4,8 @@ import { LoggerModule } from "../../modules";
 
 const UseLogger: ClassDecorator = (target) => {
   const logger = Framework.instance?.modules?.logger as LoggerModule;
-  Reflect.defineMetadata(MetadataKeys.LOGGERS, logger, target);
+  const targetClassConstructor = target.constructor;
+  Reflect.defineMetadata(MetadataKeys.LOGGERS, logger, targetClassConstructor);
 };
 
 export { UseLogger }

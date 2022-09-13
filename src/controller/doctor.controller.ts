@@ -1,14 +1,10 @@
 import * as express from 'express';
-import { UseLogger, Log } from "../../framework/decorators";
-import { RouterApiSpec } from '../../framework/modules';
-import { ResponseData } from '../../framework/modules/router/types';
+import { ControllerDefaultClass, ResponseData, RouterApiSpec } from '../../framework/modules';
 import { DoctorModel } from '../models';
 
-@UseLogger
-class DoctorController {
-  constructor() { }
+class DoctorController implements ControllerDefaultClass {
+  constructor() {}
 
-  @Log
   private doctor(api: RouterApiSpec) {
     return (req: express.Request, res: express.Response) => {
       const responseType: ResponseData = api.response;
@@ -20,7 +16,6 @@ class DoctorController {
     }
   }
 
-  @Log
   private doctorList(api: RouterApiSpec) {
     return (req: express.Request, res: express.Response) => {
       const responseType: ResponseData = api.response;

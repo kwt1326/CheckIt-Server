@@ -6,9 +6,10 @@ import Framework from '../framework';
 import { RouterModule, LoggerModule, ErrorBoundaryModule } from '../framework/modules';
 import { AuthController, DoctorController, StdController, TestController } from './controller';
 
-dotenv.config();
-const { MONGO_DB_URI, NODE_ENV } = process.env;
-const mongoUrl = NODE_ENV === 'development' ? 'mongodb://localhost:27017/checkit' : MONGO_DB_URI || '';
+dotenv.config(process.env.NODE_ENV !== 'development' ? { path: path.join(__dirname, '../../.env.prod') } : undefined);
+
+const { MONGO_DB_URI } = process.env;
+const mongoUrl = MONGO_DB_URI || '';
 
 mongoose
   .connect(mongoUrl, { retryWrites: true })

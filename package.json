@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npx tsc",
+    "build": "npx tsc && cp -r src/public build/src/public",
     "start": "ts-node src/app.ts",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q src/app.ts\""
+    "prod": "NODE_ENV=production node build/src/app.js",
+    "dev": "NODE_ENV=development concurrently \"npx tsc --watch\" \"nodemon -q src/app.ts\""
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -13,6 +14,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.2",
     "express": "~4.16.1",
+    "helmet": "^6.0.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",

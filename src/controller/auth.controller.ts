@@ -74,7 +74,7 @@ class AuthController implements ControllerDefaultClass {
             response = responseType['nouser'];
           }
   
-          return res.status(response?.statusCode || 200).json(response);
+          return res.status(response?.statusCode || 200).json(response?.json);
         }
 
         validateResult.forEach((error) => {

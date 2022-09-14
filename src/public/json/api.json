@@ -94,7 +94,9 @@
               "statusCode": 200,
               "json": {
                   "status": "ok",
-                  "token": "TODO: 사용자의 유니크한 id를 JWT token으로 만들어서 내려줘야 합니다."
+                  "data": {
+                    "token": "TODO: 사용자의 유니크한 id를 JWT token으로 만들어서 내려줘야 합니다."
+                  }
               }
           },
           "nouser": {

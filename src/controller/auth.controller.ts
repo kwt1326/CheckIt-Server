@@ -67,7 +67,7 @@ class AuthController implements ControllerDefaultClass {
   
           if (result.status === 'success') {
             response = responseType['success'];
-            response.json.token = result.token;
+            response.json.data.token = result.token;
           } else if (result.status === 'fail') {
             response = responseType['fail'];
           } else if (result.status === 'nouser') {

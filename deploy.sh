@@ -1,4 +1,4 @@
 git pull
 npm install
 npm run build
-npm run prod
+pm2 start npm -w -i 0 --name "prod" -- start

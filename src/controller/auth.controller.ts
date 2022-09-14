@@ -66,9 +66,8 @@ class AuthController implements ControllerDefaultClass {
           let response;
   
           if (result.status === 'success') {
-            response = { success: responseType['success'] };
-            response.success.json.data.token = result.token;
-            response.success.statusCode = 200;
+            response = responseType['success'];
+            response.json.data.token = result.token;
           } else if (result.status === 'fail') {
             response = responseType['fail'];
           } else if (result.status === 'nouser') {

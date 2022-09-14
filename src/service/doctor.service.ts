@@ -1,18 +1,16 @@
 import { DoctorRepository } from "../repository";
 
 class DoctorService {
-  private readonly _repository;
-
-  constructor() {
-    this._repository = new DoctorRepository();
-  }
+  constructor() {}
 
   private doctorList() {
-    return this._repository.default.getDoctorList();
+    const repository = new DoctorRepository().default;
+    return repository.getDoctorList();
   }
 
-  private doctor() {
-    return this._repository.default.getDoctorDetail();
+  private doctor(id: number) {
+    const repository = new DoctorRepository().default;
+    return repository.getDoctorDetail(id);
   }
 
   get default() {

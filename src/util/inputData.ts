@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DoctorModel, ImagesModel } from "../models";
+import { DoctorModel, ImagesModel } from '../models/index';
 
 /**
  * @description 몽고 DB 에 테스트 데이터를 넣기 위한 함수 입니다. 관계를 고려한 데이터 인풋 입니다.
@@ -7,14 +7,13 @@ import { DoctorModel, ImagesModel } from "../models";
 export async function makeDoctorData() {
   for (let i = 0; i < 51; ++i) {
     const doctor = new DoctorModel({
-      _id: new mongoose.Types.ObjectId(),
       "doctor_id": `test-${i}`,
       "available_hours": "언제든 가능합니다.",
       "available_weekday": "아무때나 진료 가능.",
       "description": "안녕하세요!?",
       "doctor_display_name": `윈터-${i}`,
       "doctor_image_url": "https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg",
-      "doctor_images": JSON.stringify([{ "type": 1, "url": "https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg" }]),
+      // doctor_images: [], // JSON.stringify([{ "type": 1, "url": "https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg" }]),
       "doctor_tel": "01023456789",
       "hospital_addr": "서울특별시 성동구 왕십리로 83-21 에스엠엔터테인먼트",
       "hospital_name": "SM 엔터테인먼트",
@@ -29,10 +28,22 @@ export async function makeDoctorData() {
       "professional_statement": "음반, 기획",
       "subjects": "에스파",
     });
-    const image = new ImagesModel({
+    const doctorImages = new ImagesModel({
       type: 1,
       url: 'https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg',
-      doctorId: doctor._id,
     });
+    const doctorImages2 = new ImagesModel({
+      type: 1,
+      url: 'https://photo.newsen.com/mphoto/2022/06/24/202206241807463510_1.jpg',
+    });
+
+    doctorImages.doctor = doctor.id;
+    doctorImages2.doctor = doctor.id;
+    doctor.doctor_images.push(doctorImages.id);
+    doctor.doctor_images.push(doctorImages2.id);
+
+    await doctor.save();
+    await doctorImages.save();
+    await doctorImages2.save();
   }
 }

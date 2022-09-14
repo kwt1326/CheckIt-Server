@@ -8,6 +8,14 @@ type ResponseData = {
   }
 }
 
+type RequestData = {
+  [x: string]: {
+    type: string,
+    description: string,
+    required?: boolean,
+  }
+}
+
 interface RouterHandlerParams { request: express.Request; response: express.Response; key: string; spec: RouterApiSpec }
 
 interface RouterProps extends ModuleDefaultProps {
@@ -30,4 +38,4 @@ interface RouterApiSpec {
   };
 }
 
-export type { RouterApiSpec, RouterHandlerParams, RouterProps, ResponseData }
+export type { RouterApiSpec, RouterHandlerParams, RouterProps, ResponseData, RequestData }

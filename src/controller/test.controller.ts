@@ -5,7 +5,7 @@ class TestController implements ControllerDefaultClass {
   constructor() {}
 
   private test(api: RouterApiSpec) {
-    return (req: express.Request, res: express.Response) => {
+    return async (req: express.Request, res: express.Response) => {
       const responseType = api.response.ok;
       res.status(responseType?.statusCode || 200).send(responseType?.json);
     }

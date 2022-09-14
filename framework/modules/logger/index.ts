@@ -3,21 +3,23 @@ import { ModuleDefaultClass } from "../common";
 import { LoggerProps, LogLevel, LogOption } from "./types"
 
 class LoggerModule implements ModuleDefaultClass {
-  protected options: LogOption;
-  protected styles: any;
+  protected static _options: LogOption;
+  protected static styles: any;
 
-  constructor(props: LoggerProps) {
-    this.options = props.options;
-  }
+  constructor() {}
 
   init(app: express.Express) {}
 
-  setStyle(styles: any) {
+  static set options(options: LogOption) {
+    LoggerModule._options = options;
+  }
+
+  static setStyle(styles: any) {
     this.styles = styles.join(';') + ';';
   }
 
-  printLog(level: LogLevel, msg: string) {
-    switch (level) {
+  static printLog(msg: string) {
+    switch (LoggerModule._options.level) {
       case 'warn':
         return console.warn(`%c${msg}`, "color: yellow" + this.styles);
       case 'error':

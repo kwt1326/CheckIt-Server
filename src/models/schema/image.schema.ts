@@ -1,12 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 const imageSchema = new mongoose.Schema({
-  type: { type: String, require: true },
+  type: { type: Number, require: true },
   url: { type: String, require: true },
-  doctorId: {
+  doctor: {
     type: Schema.Types.ObjectId,
     ref: 'Doctor',
-    required: true
   }
 });
 

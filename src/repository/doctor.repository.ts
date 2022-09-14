@@ -2,11 +2,11 @@ import { DoctorModel } from "../models";
 
 class DoctorRepository {
   private getDoctorList() {
-    return DoctorModel.find();
+    return DoctorModel.find().populate('');
   }
 
-  private getDoctorDetail() {
-    return DoctorModel.findById(0);
+  private getDoctorDetail(id: number) {
+    return DoctorModel.findById(id);
   }
 
   get default() {

@@ -4,11 +4,7 @@ import mongoose from 'mongoose';
 
 import Framework from '../framework';
 import { RouterModule, LoggerModule, ErrorBoundaryModule } from '../framework/modules';
-
-import DoctorController from './controller/doctor.controller';
-import TestController from './controller/test.controller';
-
-import { makeDoctorData } from './util/inputData';
+import { AuthController, DoctorController, TestController } from './controller';
 
 dotenv.config();
 const { MONGO_DB_URI, NODE_ENV } = process.env;
@@ -19,7 +15,7 @@ mongoose
   .then(() => console.log('successfully connect mongo db'))
   .catch((e: any) => { console.error(e); console.log('failed db connection') });
 
-// makeDoctorData();
+LoggerModule.options = { level: 'warn' };
 
 const framework = new Framework({
   serverProps: {
@@ -28,10 +24,10 @@ const framework = new Framework({
   appProps: {
     modules: {
       router: new RouterModule({ path: path.join(__dirname, 'public/json/api.json'), routeFunctions: {
-        ...(new DoctorController().default),
-        ...(new TestController().default)
+        ...(new AuthController()).default,
+        ...(new DoctorController()).default,
+        ...(new TestController()).default,
       } }),
-      logger: new LoggerModule({ options: {} }),
       errorBoundary: new ErrorBoundaryModule(),
     }
   }

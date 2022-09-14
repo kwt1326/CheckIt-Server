@@ -14,7 +14,7 @@ type ServerType = 'express' | 'koa';
 
 type Modules = {
   router: ModuleDefaultClass;
-  logger: ModuleDefaultClass;
+  // logger: ModuleDefaultClass;
   errorBoundary: ModuleDefaultClass;
 };
 

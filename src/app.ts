@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import Framework from '../framework';
 import { RouterModule, LoggerModule, ErrorBoundaryModule } from '../framework/modules';
-import { AuthController, DoctorController, TestController } from './controller';
+import { AuthController, DoctorController, StdController, TestController } from './controller';
 
 dotenv.config();
 const { MONGO_DB_URI, NODE_ENV } = process.env;
@@ -26,6 +26,7 @@ const framework = new Framework({
       router: new RouterModule({ path: path.join(__dirname, 'public/json/api.json'), routeFunctions: {
         ...(new AuthController()).default,
         ...(new DoctorController()).default,
+        ...(new StdController()).default,
         ...(new TestController()).default,
       } }),
       errorBoundary: new ErrorBoundaryModule(),

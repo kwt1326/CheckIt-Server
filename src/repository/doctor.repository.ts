@@ -1,12 +1,21 @@
-import { DoctorModel } from "../models";
+import { AuthModel, DoctorModel } from "../models";
 
 class DoctorRepository {
-  private getDoctorList() {
-    return DoctorModel.find().populate('');
+  private async getDoctorList() {
+    const doctorList = await DoctorModel.find();
+    return doctorList;
   }
 
-  private getDoctorDetail(id: number) {
-    return DoctorModel.findById(id);
+  private async getDoctorDetail(id: number) {
+    const user = await AuthModel.findById(id);
+    if (user) {
+      const doctorId = user.doctor?._id;
+      if (doctorId) {
+        const doctor = await DoctorModel.findById(doctorId).populate('doctor_images');
+        return doctor;
+      }
+    }
+    return null;
   }
 
   get default() {

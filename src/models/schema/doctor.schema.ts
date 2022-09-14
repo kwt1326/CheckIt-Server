@@ -8,6 +8,7 @@ const doctorSchema = new mongoose.Schema({
   doctor_display_name: { type: String, default: '' },
   doctor_image_url: { type: String, default: '', },
   doctor_tel: { type: String, default: '', },
+  doctor_tel_kakao: { type: String, default: '', },
   hospital_addr: { type: String, required: true, },
   hospital_name: { type: String, required: true, },
   hospital_img: { type: String, required: true, },

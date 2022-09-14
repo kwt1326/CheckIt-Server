@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
-import jsonwebtoken, { JwtPayload } from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
+import { LoggerModule } from '../../framework/modules';
 import { SignInDto, SignUpDto } from "../dto";
 import { AuthRepository } from "../repository";
+import { verifyToken } from '../util/verifyToken';
 
 class AuthService {
   constructor() {}
@@ -46,25 +48,20 @@ class AuthService {
 
   private async withDrawal(token: string) {
     const repository = new AuthRepository().default;
-    const secret = process.env.JWT_SECRET;
 
     try {
-      if (secret) {
-        const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET || '') as JwtPayload;
-        const id = payload?.id;
-
-        if (id) {
-          const isDeleted = await repository.deleteUser(id);
-        
-          return isDeleted ?
-            { status: 'ok', message: '회원탈퇴가 완료되었습니다.' } :
-            { status: 'fail', message: '회원탈퇴에 실패했습니다.' };
-        }
+      const id = verifyToken(token);
+      if (id) {
+        const isDeleted = await repository.deleteUser(id);
+        return isDeleted ?
+          { status: 'ok', message: '회원탈퇴가 완료되었습니다.' } :
+          { status: 'fail', message: '회원탈퇴에 실패했습니다.' };
       }
-      return { status: 'fail', message: '유효하지 않거나 만료된 토큰입니다.' }
     } catch (error) {
-      return { status: 'fail', message: '유효하지 않거나 만료된 토큰입니다.' }
+      LoggerModule.printLog(JSON.stringify(error));
+      return { status: 'fail', message: '유효하지 않거나 만료된 토큰입니다.' };
     }
+    return { status: 'fail', message: '유효하지 않거나 만료된 토큰입니다.' };
   }
 
   get default() {

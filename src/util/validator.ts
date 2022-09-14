@@ -11,6 +11,10 @@ import { RequestData } from "../../framework/modules/router/types";
  * @returns 
  */
 export const validator = (data: any, dataType: RequestData): boolean | string[] => {
+  // body 타입이 모두 string 일 경우 전부 required 로 취급합니다.
+  if (Object.values(dataType).every((value) => typeof value === 'string')) {
+    return Object.keys(dataType).every((key) => data[key] !== undefined);
+  }
   // required body types filtering
   const requiredDataTypeKeys = Object.entries(dataType).filter(([_, value]) => value.required).map(([key, _]) => key);
   // if all required body types are not undefined, return true

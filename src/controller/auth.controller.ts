@@ -90,17 +90,20 @@ class AuthController implements ControllerDefaultClass {
     return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
       const service = new AuthService().default;
 
-      const responseType: ResponseData = api.response;
-      const token = extractToken(req);
+      if (api.method === 'post') {
+        const responseType: ResponseData = api.response;
+        const token = extractToken(req);
 
-      if (!token) return next(createError(401));
+        if (!token) return next(createError(401));
 
-      const result = await service.withDrawal(token);
+        const result = await service.withDrawal(token);
 
-      if (result.status === 'ok') {
-        return res.status(responseType.ok.statusCode).json(responseType.ok.json);
+        if (result.status === 'ok') {
+          return res.status(responseType.ok.statusCode).json(responseType.ok.json);
+        }
+        return res.status(200).json({ status: 'fail' });
       }
-      return res.status(200).json({ status: 'fail' });
+      return next(createError(404));
     }
   }
 

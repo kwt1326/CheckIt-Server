@@ -29,7 +29,7 @@ class AuthController implements ControllerDefaultClass {
   
           if (result.status === 'success') {
             response = responseType['success'];
-            response.json.data.token = result.token;
+            response.json.data.token = `Bearer ${result.token}`;
           } else if (result.status === 'fail') {
             response = responseType['fail'];
           } else if (result.status === 'duplicated') {
@@ -67,7 +67,7 @@ class AuthController implements ControllerDefaultClass {
   
           if (result.status === 'success') {
             response = responseType['success'];
-            response.json.data.token = result.token;
+            response.json.data.token = `Bearer ${result.token}`;
           } else if (result.status === 'fail') {
             response = responseType['fail'];
           } else if (result.status === 'nouser') {

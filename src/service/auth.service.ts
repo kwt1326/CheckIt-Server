@@ -24,7 +24,7 @@ class AuthService {
       return { status: 'fail', token: undefined };
     }
 
-    const token = jsonwebtoken.sign({ id: user._id }, secret, { expiresIn: '24h' });
+    const token = jsonwebtoken.sign({ id: user._id }, secret);
     return { status: 'success', token };
   }
 
@@ -42,7 +42,7 @@ class AuthService {
       return { status: 'fail', token: undefined };
     }
 
-    const token = jsonwebtoken.sign({ id: user._id }, secret, { expiresIn: '24h' });
+    const token = jsonwebtoken.sign({ id: user._id }, secret);
     return { status: 'success', token };
   }
 

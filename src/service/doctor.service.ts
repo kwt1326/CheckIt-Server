@@ -31,7 +31,7 @@ class DoctorService {
     return null;
   }
 
-  private async doctor(id: number) {
+  private async doctor(id: string) {
     const repository = new DoctorRepository().default;
 
     try {

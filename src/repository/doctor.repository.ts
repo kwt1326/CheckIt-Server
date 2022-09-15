@@ -6,7 +6,7 @@ class DoctorRepository {
     return doctorList;
   }
 
-  private async getDoctorDetail(id: number) {
+  private async getDoctorDetail(id: string) {
     const doctor = await DoctorModel.findById(id).populate('doctor_images');
     return doctor;
   }

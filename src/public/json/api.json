@@ -170,9 +170,9 @@
               "json": {
                   "status": "ok",
                   "type": "array",
-                  "doctor": {
+                  "data": {
                       "type": "object",
-                      "property": {
+                      "doctor": {
                           "available_hours": "string",
                           "available_weekday": "string",
                           "description": "string",

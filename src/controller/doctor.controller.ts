@@ -22,10 +22,10 @@ class DoctorController implements ControllerDefaultClass {
 
         const { doctor_id } = req.query;
   
-        if (!Number.isNaN(Number(doctor_id))) {
-          jsonResult.doctor.property = await service.doctor(Number(doctor_id));
+        if (typeof doctor_id === 'string') {
+          jsonResult.data.doctor = await service.doctor(doctor_id);
     
-          res.status(responseType.success.statusCode).json(jsonResult);
+          return res.status(responseType.success.statusCode).json(jsonResult);
         }
         return next(createError(400));
       }
@@ -44,9 +44,9 @@ class DoctorController implements ControllerDefaultClass {
   
         if (!token) return next(createError(401));
   
-        jsonResult.data.doctors.items = await service.doctorList(token);
+        jsonResult.data.doctors = await service.doctorList(token);
   
-        res.status(responseType.success.statusCode).json(jsonResult);
+        return res.status(responseType.success.statusCode).json(jsonResult);
       }
       return next(createError(404));
     }

@@ -27,7 +27,7 @@ class StdController implements ControllerDefaultClass {
         // body 값이 유효하면 성공 처리
         if (validateResult) {
           const response = responseType.success;
-          return res.status(response?.statusCode || 200).json(response?.json);
+          return res.status(200).json(response?.json);
         }
 
         // body validate 통과하지 못하면 실패 처리

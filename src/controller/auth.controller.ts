@@ -36,7 +36,7 @@ class AuthController implements ControllerDefaultClass {
             response = responseType['duplicated'];
           }
   
-          return res.status(response?.statusCode || 200).json(response?.json);
+          return res.status(200).json(response?.json);
         }
 
         validateResult.forEach((error) => {
@@ -74,7 +74,7 @@ class AuthController implements ControllerDefaultClass {
             response = responseType['nouser'];
           }
   
-          return res.status(response?.statusCode || 200).json(response?.json);
+          return res.status(200).json(response?.json);
         }
 
         validateResult.forEach((error) => {

@@ -7,15 +7,8 @@ class DoctorRepository {
   }
 
   private async getDoctorDetail(id: number) {
-    const user = await AuthModel.findById(id);
-    if (user) {
-      const doctorId = user.doctor?._id;
-      if (doctorId) {
-        const doctor = await DoctorModel.findById(doctorId).populate('doctor_images');
-        return doctor;
-      }
-    }
-    return null;
+    const doctor = await DoctorModel.findById(id).populate('doctor_images');
+    return doctor;
   }
 
   get default() {

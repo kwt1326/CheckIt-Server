@@ -17,12 +17,17 @@ class DoctorController implements ControllerDefaultClass {
         const responseType: ResponseData = api.response;
         const jsonResult = responseType.success.json;
         const token = extractToken(req);
-  
+        
         if (!token) return next(createError(401));
+
+        const { doctor_id } = req.query;
   
-        jsonResult.doctor.property = await service.doctor(token);
-  
-        res.status(responseType.success.statusCode).json(jsonResult);
+        if (!Number.isNaN(Number(doctor_id))) {
+          jsonResult.doctor.property = await service.doctor(Number(doctor_id));
+    
+          res.status(responseType.success.statusCode).json(jsonResult);
+        }
+        return next(createError(400));
       }
       return next(createError(404));
     }

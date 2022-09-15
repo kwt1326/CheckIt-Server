@@ -31,11 +31,10 @@ class DoctorService {
     return null;
   }
 
-  private async doctor(token: string) {
+  private async doctor(id: number) {
     const repository = new DoctorRepository().default;
 
     try {
-      const id = verifyToken(token);
       if (id) {
         const doctor = await repository.getDoctorDetail(id);
         if (doctor) {

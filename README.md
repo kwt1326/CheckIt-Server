@@ -7,6 +7,9 @@ Numble CheckIt Server Project Challenge
 * Mongoose
 * Node.js 16
 
+# Structure
+* MVC Framework
+
 # App Preview (Front-end)
 
 ---

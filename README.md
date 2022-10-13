@@ -1,6 +1,9 @@
 # CheckIt-Server
 Numble CheckIt Server Project Challenge
 
+# 회고록 링크
+https://impartial-eclipse-7e7.notion.site/Node-js-Numble-X-Chekit-c4b5a370dc294bd5954adbb848c089ce
+
 # Stack
 * TypeScript
 * Express
